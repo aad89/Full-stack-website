@@ -373,8 +373,6 @@ declare function debugCreate(namespace: string): ((...args: any[]) => void) & {
     extend: () => void;
 };
 
-export declare function Decimal(n: Decimal.Value): Decimal;
-
 export declare namespace Decimal {
     export type Constructor = typeof Decimal;
     export type Instance = Decimal;
@@ -1120,9 +1118,6 @@ declare interface EngineConfig {
     allowTriggerPanic?: boolean;
     prismaPath?: string;
     generator?: GeneratorConfig;
-    /**
-     * @remarks this field is used internally by Policy, do not rename or remove
-     */
     overrideDatasources: Datasources;
     showColors?: boolean;
     logQueries?: boolean;
@@ -1151,7 +1146,6 @@ declare interface EngineConfig {
     /**
      * The contents of the datasource url saved in a string
      * @remarks only used by DataProxyEngine.ts
-     * @remarks this field is used internally by Policy, do not rename or remove
      */
     inlineDatasources: GetPrismaClientConfig['inlineDatasources'];
     /**
@@ -1250,7 +1244,7 @@ declare type Error_2 = {
     kind: 'UnsupportedNativeDataType';
     type: string;
 } | {
-    kind: 'postgres';
+    kind: 'Postgres';
     code: string;
     severity: string;
     message: string;
@@ -1258,12 +1252,12 @@ declare type Error_2 = {
     column: string | undefined;
     hint: string | undefined;
 } | {
-    kind: 'mysql';
+    kind: 'Mysql';
     code: number;
     message: string;
     state: string;
 } | {
-    kind: 'sqlite';
+    kind: 'Sqlite';
     /**
      * Sqlite extended error code: https://www.sqlite.org/rescode.html
      */
@@ -1438,6 +1432,8 @@ export declare interface FieldRef<Model, FieldType> {
     readonly isList: boolean;
 }
 
+declare type Flavour = 'mysql' | 'postgres' | 'sqlite';
+
 export declare type FluentOperation = 'findUnique' | 'findUniqueOrThrow' | 'findFirst' | 'findFirstOrThrow' | 'create' | 'update' | 'upsert' | 'delete';
 
 export declare interface Fn<Params = unknown, Returns = unknown> {
@@ -1474,7 +1470,7 @@ export declare type GetAggregateResult<P extends OperationPayload, A> = {
     };
 };
 
-declare function getBatchRequestPayload(batch: JsonQuery[], transaction?: TransactionOptions_3<unknown>): QueryEngineBatchRequest;
+declare function getBatchRequestPayload(batch: JsonQuery[], transaction?: TransactionOptions_2<unknown>): QueryEngineBatchRequest;
 
 export declare type GetBatchResult = {
     count: number;
@@ -1538,14 +1534,12 @@ export declare function getPrismaClient(config: GetPrismaClientConfig): {
         _clientVersion: string;
         _errorFormat: ErrorFormat;
         _tracingHelper: TracingHelper;
+        _metrics: MetricsClient;
         _middlewares: MiddlewareHandler<QueryMiddleware>;
         _previewFeatures: string[];
         _activeProvider: string;
         _globalOmit?: GlobalOmitOptions | undefined;
         _extensions: MergedExtensionsList;
-        /**
-         * @remarks This is used internally by Policy, do not rename or remove
-         */
         _engine: Engine;
         /**
          * A fully constructed/applied Client that references the parent
@@ -1637,7 +1631,7 @@ export declare function getPrismaClient(config: GetPrismaClientConfig): {
          */
         _transactionWithCallback({ callback, options, }: {
             callback: (client: Client) => Promise<unknown>;
-            options?: TransactionOptions_2;
+            options?: Options;
         }): Promise<unknown>;
         _createItxClient(transaction: PrismaPromiseInteractiveTransaction): Client;
         /**
@@ -1654,7 +1648,7 @@ export declare function getPrismaClient(config: GetPrismaClientConfig): {
          */
         _request(internalParams: InternalRequestParams): Promise<any>;
         _executeRequest({ args, clientMethod, dataPath, callsite, action, model, argsMapper, transaction, unpacker, otelParentCtx, customDataProxyFetch, }: InternalRequestParams): Promise<any>;
-        $metrics: MetricsClient;
+        readonly $metrics: MetricsClient;
         /**
          * Shortcut for checking a preview flag
          * @param feature preview flag
@@ -1925,7 +1919,7 @@ declare type InternalRequestParams = {
     customDataProxyFetch?: CustomDataProxyFetch;
 } & Omit<QueryMiddlewareParams, 'runInTransaction'>;
 
-declare const enum IsolationLevel {
+declare enum IsolationLevel {
     ReadUncommitted = "ReadUncommitted",
     ReadCommitted = "ReadCommitted",
     RepeatableRead = "RepeatableRead",
@@ -2168,8 +2162,8 @@ export declare type Metrics = {
 };
 
 export declare class MetricsClient {
-    private _client;
-    constructor(client: Client);
+    private _engine;
+    constructor(engine: Engine);
     /**
      * Returns all metrics gathered up to this point in prometheus format.
      * Result of this call can be exposed directly to prometheus scraping endpoint
@@ -2325,6 +2319,12 @@ export declare type OptionalKeys<O> = {
 }[keyof O];
 
 declare type Options = {
+    maxWait?: number;
+    timeout?: number;
+    isolationLevel?: IsolationLevel;
+};
+
+declare type Options_2 = {
     clientVersion: string;
 };
 
@@ -2456,7 +2456,7 @@ export declare class PrismaClientUnknownRequestError extends Error implements Er
 export declare class PrismaClientValidationError extends Error {
     name: string;
     clientVersion: string;
-    constructor(message: string, { clientVersion }: Options);
+    constructor(message: string, { clientVersion }: Options_2);
     get [Symbol.toStringTag](): string;
 }
 
@@ -2536,8 +2536,6 @@ declare type PrismaPromiseTransaction<PayloadType = unknown> = PrismaPromiseBatc
 
 export declare const PrivateResultType: unique symbol;
 
-declare type Provider = 'mysql' | 'postgres' | 'sqlite';
-
 declare namespace Public {
     export {
         validator
@@ -2563,7 +2561,7 @@ declare type Query = {
 };
 
 declare interface Queryable {
-    readonly provider: Provider;
+    readonly provider: Flavour;
     readonly adapterName: (typeof officialPrismaAdapters)[number] | (string & {});
     /**
      * Execute a query given as SQL, interpolating the given parameters,
@@ -2592,7 +2590,7 @@ declare interface QueryCompilerConstructor {
 
 declare type QueryCompilerOptions = {
     datamodel: string;
-    provider: Provider;
+    flavour: Flavour;
     connectionInfo: ConnectionInfo;
 };
 
@@ -2737,7 +2735,7 @@ export declare type RenameAndNestPayloadKeys<P> = {
 };
 
 declare type RequestBatchOptions<InteractiveTransactionPayload> = {
-    transaction?: TransactionOptions_3<InteractiveTransactionPayload>;
+    transaction?: TransactionOptions_2<InteractiveTransactionPayload>;
     traceparent?: string;
     numTry?: number;
     containsWrite: boolean;
@@ -3307,7 +3305,7 @@ declare interface Transaction extends Queryable {
 declare namespace Transaction_2 {
     export {
         IsolationLevel,
-        TransactionOptions_2 as Options,
+        Options,
         InteractiveTransactionInfo,
         TransactionHeaders
     }
@@ -3328,13 +3326,7 @@ declare type TransactionOptions = {
     usePhantomQuery: boolean;
 };
 
-declare type TransactionOptions_2 = {
-    maxWait?: number;
-    timeout?: number;
-    isolationLevel?: IsolationLevel;
-};
-
-declare type TransactionOptions_3<InteractiveTransactionPayload> = {
+declare type TransactionOptions_2<InteractiveTransactionPayload> = {
     kind: 'itx';
     options: InteractiveTransactionOptions<InteractiveTransactionPayload>;
 } | {
