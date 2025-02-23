@@ -1,0 +1,6 @@
+.DayPicker-Day--selected {
+    background-color: #3f51b5 !important; /* Override with your custom color */
+    color: white !important;
+    border-radius: 50%;
+  }
+  
