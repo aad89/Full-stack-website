@@ -1,23 +1,23 @@
-# Use the official Node.js image from Docker Hub
+# Step 1: Use the official Node.js image from Docker Hub
 FROM node:18
 
-# Set the working directory inside the container
+# Step 2: Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json files first to leverage Docker's caching
+# Step 3: Copy package.json and package-lock.json (if exists) into the container
 COPY package*.json ./
 
-# Install dependencies (this includes @prisma/client and any other dependencies)
+# Step 4: Install dependencies (including prisma and @prisma/client)
 RUN npm install
 
-# Copy the rest of the application code into the container
+# Step 5: Copy the rest of the application code into the container
 COPY . .
 
-# Generate Prisma client (necessary for Prisma to communicate with the database)
+# Step 6: Generate the Prisma Client
 RUN npx prisma generate
 
-# Expose the port the app will run on (default is 3000)
+# Step 7: Expose the port your app will run on
 EXPOSE 3000
 
-# Set the command to start your app (adjust if you use another start script)
+# Step 8: Start the application
 CMD ["npm", "start"]
