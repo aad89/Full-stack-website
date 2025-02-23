@@ -3,7 +3,7 @@
     "name": "node-js",
     "builds": [
         {
-            "src": "server/package.json",
+            "src": "index.js",
             "use": "@vercel/node",
             "config": {
                 "buildCommand": "npm install && chmod +x node_modules/.bin/prisma && prisma generate"
