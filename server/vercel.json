@@ -2,9 +2,18 @@
     "version": 2,
     "name": "node-js",
     "builds": [
-        { "src": "index.js", "use": "@vercel/node" }
+        {
+            "src": "server/package.json",
+            "use": "@vercel/node",
+            "config": {
+                "buildCommand": "npm install && chmod +x node_modules/.bin/prisma && prisma generate"
+            }
+        }
     ],
     "routes": [
-        { "src": "/(.*)", "dest": "/" }
+        {
+            "src": "/(.*)",
+            "dest": "/"
+        }
     ]
 }
