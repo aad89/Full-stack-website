@@ -1,17 +1,10 @@
 {
     "version": 2,
-    "name": "full-stack-website",
+    "name": "node-js",
     "builds": [
-      {
-        "src": "server/index.js",
-        "use": "@vercel/node"
-      }
+        { "src": "index.js", "use": "@vercel/node" }
     ],
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/"
-      }
+        { "src": "/(.*)", "dest": "/" }
     ]
-  }
-  
+}
