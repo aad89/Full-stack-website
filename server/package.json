@@ -6,6 +6,9 @@
     "start": "nodemon index.js",
     "postinstall": "prisma generate"
   },
+  "engines": {
+  "node": "18.x"
+},
   "author": "",
   "license": "ISC",
   "type": "module",
