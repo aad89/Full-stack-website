@@ -1,18 +1,16 @@
 {
     "version": 2,
-    "name": "node-js",
+    "name": "full-stack-website",
     "builds": [
       {
-        "src": "server/package.json",
-        "use": "@vercel/node",
-        "config": {
-          "buildCommand": "npm install && chmod +x node_modules/.bin/prisma && prisma generate"
-        }
+        "src": "server/index.js",
+        "use": "@vercel/node"
       }
     ],
     "routes": [
       {
-        "src": "/(.*)", "dest": "/"
+        "src": "/api/(.*)",
+        "dest": "/server/index.js"
       }
     ]
   }
