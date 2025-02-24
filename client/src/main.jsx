@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     domain="dev-cobtp5a61vez204z.us.auth0.com"
     clientId="UQNVklMoamc6OTe6LxQYst85mE1PpqEH"
     authorizationParams={{
-      redirect_uri: 'http://localhost:5173'
+      redirect_uri: 'https://full-stack-website-client.onrender.com'
     }}
     audience='http://localhost:8000'
     scope= "openid profile email"
