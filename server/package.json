@@ -2,12 +2,13 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
- "scripts": {
-    "start": "node index.js",  
-    "dev": "nodemon index.js",  
-    "prisma:migrate": "npx prisma migrate deploy", 
-    "install:prisma": "npx prisma generate" 
-  },
+"scripts": {
+  "start": "node index.js",
+  "dev": "nodemon index.js",
+  "prisma:migrate": "npx prisma migrate deploy",
+  "install:prisma": "npx prisma generate",
+  "postinstall": "chmod +x node_modules/.bin/prisma"  // Ensures Prisma is executable
+}
   "engines": {
   "node": "18.x"
 },
