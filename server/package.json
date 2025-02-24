@@ -4,7 +4,9 @@
   "main": "index.js",
  "scripts": {
     "build": "npx prisma generate",  
-    "start": "node index.js"
+    "start": "node src/index.js",    
+    "dev": "nodemon src/index.js",  
+    "prisma:migrate": "npx prisma migrate deploy"  
   },
   "engines": {
   "node": "18.x"
