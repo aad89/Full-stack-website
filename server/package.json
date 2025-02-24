@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
  "scripts": {
-    "build": "npx prisma generate",  
-    "start": "node src/index.js",    
-    "dev": "nodemon src/index.js",  
-    "prisma:migrate": "npx prisma migrate deploy"  
+    "start": "node index.js",  
+    "dev": "nodemon index.js",  
+    "prisma:migrate": "npx prisma migrate deploy", 
+    "install:prisma": "npx prisma generate" 
   },
   "engines": {
   "node": "18.x"
