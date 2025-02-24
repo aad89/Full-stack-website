@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import {toast} from 'react-toastify'
 
 export const api = axios.create({
-    baseURL: 'http://localhost:8000'
+    baseURL: 'https://full-stack-website-f634.onrender.com'
 })
 
 export const getAllProperties = async()=>{
