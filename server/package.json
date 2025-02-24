@@ -7,8 +7,9 @@
   "dev": "nodemon index.js",
   "prisma:migrate": "npx prisma migrate deploy",
   "install:prisma": "npx prisma generate",
-  "postinstall": "chmod +x node_modules/.bin/prisma"  // Ensures Prisma is executable
-}
+  "postinstall": "chmod +x node_modules/.bin/prisma"
+},
+
   "engines": {
   "node": "18.x"
 },
