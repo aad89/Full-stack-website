@@ -1,10 +1,10 @@
-🏡 Full-Stack Real Estate Application
+**🏡 Full-Stack Real Estate Application**
 
 Personal MERN Stack Project – Real Estate Platform
 
 This is a fully functional real estate web application built using the MERN stack. I developed this project to showcase my full-stack web development abilities, including property management, CRUD operations, real-time data handling, and responsive UI design.
 
-🚀 Project Highlights
+**🚀 Project Highlights**
 
 Full-Stack MERN Application: Built from scratch using MongoDB, Express.js, React.js, and Node.js.
 
@@ -18,7 +18,7 @@ Responsive UI: Designed with mobile-first principles and optimized for desktop a
 
 Database Integration: Connected to MongoDB for real-time property data management.
 
-🔧 Technologies Used
+**🔧 Technologies Used**
 
 Frontend: React.js, CSS/SCSS
 
@@ -28,11 +28,11 @@ Authentication: JWT (JSON Web Tokens)
 
 
 
-🔗 Live Site
+**🔗 Live Site**
 
 Check out the live website: [Live Site](https://full-stack-website-client.onrender.com)
 
-💻 Key Skills Demonstrated
+**💻 Key Skills Demonstrated**
 
 Full-stack JavaScript development
 
