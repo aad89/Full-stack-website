@@ -26,17 +26,22 @@ Backend: Node.js, Express.js, MongoDB, Mongoose
 
 Authentication: JWT (JSON Web Tokens)
 
-Hosting: Render.com (Frontend & Backend)
+
 
 🔗 Live Site
 
-Check out the live website: Live Site
+Check out the live website: [Live Site](https://full-stack-website-client.onrender.com)
 
 💻 Key Skills Demonstrated
 
 Full-stack JavaScript development
+
 REST API architecture and CRUD operations
+
 Admin dashboard implementation
+
 Responsive UI/UX design
+
 Database integration with MongoDB
+
 Real-time data management
